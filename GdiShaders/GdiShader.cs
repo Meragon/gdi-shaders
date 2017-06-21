@@ -228,7 +228,7 @@ public class GdiShader
     }
     public vec2 mix(vec2 x, vec2 y, float a)
     {
-        var n = new vec4();
+        var n = new vec2();
         n.x = mix(x.x, y.x, a);
         n.y = mix(x.y, y.y, a);
         return n;
@@ -450,7 +450,7 @@ public class mat2
         y2 = _y2;
     }
 }
-public class vec2
+public struct vec2
 {
     public static vec2 operator +(vec2 left, vec2 right)
     {
@@ -510,13 +510,9 @@ public class vec2
         return new vec2(left.x / right, left.y / right);
     }
 
-    public float x { get; set; }
-    public float y { get; set; }
-
-    public vec2()
-    {
-
-    }
+    public float x;
+    public float y;
+    
     public vec2(float all)
     {
         x = all;
@@ -557,8 +553,13 @@ public class vec2
         return string.Format("[{0}, {1}]", x, y);
     }
 }
-public class vec3 : vec2
+public struct vec3
 {
+    public static implicit operator vec2(vec3 v)
+    {
+        return v.xy;
+    }
+
     public static vec3 operator +(vec3 left, vec3 right)
     {
         return new vec3(left.x + right.x, left.y + right.y, left.z + right.z);
@@ -616,24 +617,24 @@ public class vec3 : vec2
         return new vec3(l.x / r.x, l.y / r.y, l.z / r.z);
     }
 
+    public float x;
+    public float y;
     public float r { get { return x; } set { x = value; } }
     public float g { get { return y; } set { y = value; } }
     public float b { get { return z; } set { z = value; } }
-    public float z { get; set; }
-
-    public vec3()
-    {
-
-    }
+    public float z;
+    
     public vec3(float all)
-        : base(all)
     {
+        x = all;
+        y = all;
         z = all;
     }
     public vec3(float _x, float _y)
-        : base(_x, _y)
     {
-
+        x = _x;
+        y = _y;
+        z = 0;
     }
     public vec3(float _x, float _y, float _z)
     {
@@ -648,6 +649,24 @@ public class vec3 : vec2
         z = _z;
     }
 
+    public vec2 xx
+    {
+        get { return new vec2(x, x); }
+    }
+    public vec2 xy
+    {
+        get { return new vec2(x, y); }
+        set
+        {
+            x = value.x;
+            y = value.y;
+        }
+    }
+    public vec2 yx { get { return new vec2(y, x); } }
+    public vec2 yy
+    {
+        get { return new vec2(y, y); }
+    }
     public vec3 rgb
     {
         get { return this; }
@@ -682,8 +701,12 @@ public class vec3 : vec2
         return string.Format("[{0}, {1}, {2}]", x, y, z);
     }
 }
-public class vec4 : vec3
+public struct vec4
 {
+    public static vec4 operator +(vec4 l, vec4 r)
+    {
+        return new vec4(l.x + r.x, l.y + r.y, l.z + r.z, l.w + r.w);
+    }
     public static vec4 operator +(vec3 l, vec4 r)
     {
         return new vec4(l.x + r.x, l.y + r.y, l.z + r.z, r.z);
@@ -722,33 +745,43 @@ public class vec4 : vec3
     }
 
     public float a { get { return w; } set { w = value; } }
-    public float w { get; set; }
+    public float x;
+    public float y;
+    public float z;
+    public float w;
 
-    public vec4()
-    {
+    public float r { get { return x; } set { x = value; } }
+    public float g { get { return y; } set { y = value; } }
+    public float b { get { return z; } set { z = value; } }
 
-    }
     public vec4(float all)
-        : base(all)
     {
+        x = all;
+        y = all;
+        z = all;
         w = all;
     }
     public vec4(float _x, float _y)
-        : base(_x, _y)
     {
-
+        x = _x;
+        y = _y;
+        z = 0;
+        w = 0;
     }
     public vec4(float _x, float _y, float _z)
-        : base(_x, _y, _z)
     {
-
+        x = _x;
+        y = _y;
+        z = _z;
+        w = 0;
     }
     public vec4(float _x, float _y, float _z, float _w)
-        : base(_x, _y, _z)
     {
+        x = _x;
+        y = _y;
+        z = _z;
         w = _w;
     }
-
     public vec4(vec2 v1, vec2 v2)
     {
         x = v1.x;
@@ -771,6 +804,52 @@ public class vec4 : vec3
         w = _w;
     }
 
+    public vec2 xx
+    {
+        get { return new vec2(x, x); }
+    }
+    public vec2 xy
+    {
+        get { return new vec2(x, y); }
+        set
+        {
+            x = value.x;
+            y = value.y;
+        }
+    }
+    public vec2 yx { get { return new vec2(y, x); } }
+    public vec2 yy
+    {
+        get { return new vec2(y, y); }
+    }
+    public vec3 rgb
+    {
+        get { return new vec3(r, g, b); }
+        set
+        {
+            x = value.x;
+            y = value.y;
+            z = value.z;
+        }
+    }
+    public vec3 xyz
+    {
+        get { return new vec3(x, y, z); }
+        set { rgb = value; }
+    }
+    public vec2 xz
+    {
+        get { return new vec2(x, z); }
+        set
+        {
+            x = value.x;
+            z = value.y;
+        }
+    }
+    public vec2 yz
+    {
+        get { return new vec2(y, z); }
+    }
     public vec2 yw { get { return new vec2(y, w); } }
 
     public override string ToString()

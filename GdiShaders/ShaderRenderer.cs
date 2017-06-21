@@ -35,7 +35,10 @@ namespace GdiShaders
 
             GdiShader.iGlobalTime = 0;
 
-            shader.Start();
+            lock (shaderLock)
+            {
+                shader.Start();
+            }
 
             System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(UpdateShader);
             task.Start();
@@ -52,7 +55,7 @@ namespace GdiShaders
             {
                 if (shader == null) continue;
 
-                time = watch.ElapsedMilliseconds / 1000;
+                time = watch.ElapsedMilliseconds / 1000f;
                 if (time > .1f) // Update every x seconds.
                 {
                     time = 0;
@@ -91,7 +94,7 @@ namespace GdiShaders
                     shader.Draw(e);
         }
 
-        private static object shaderLock = new object();
+        private static readonly object shaderLock = new object();
 
         protected override CreateParams CreateParams
         {
