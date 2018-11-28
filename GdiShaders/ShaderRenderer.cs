@@ -33,7 +33,7 @@ namespace GdiShaders
         {
             stop = false;
 
-            GdiShader.iGlobalTime = 0;
+            GdiShader.iTime = 0;
 
             lock (shaderLock)
             {
@@ -55,28 +55,23 @@ namespace GdiShaders
             {
                 if (shader == null) continue;
 
-                time = watch.ElapsedMilliseconds / 1000f;
-                if (time > .1f) // Update every x seconds.
+                GdiShader.iTime = watch.ElapsedMilliseconds / 1000f; // Minimum shader step.
+
+                if (GdiShader.iResolution.x != Width || GdiShader.iResolution.y != Height)
+                    lock (shaderLock)
+                        shader.Start();
+
+                GdiShader.iResolution.x = Width;
+                GdiShader.iResolution.y = Height;
+
+                if (shader != null)
                 {
-                    time = 0;
-
-                    GdiShader.iGlobalTime += .01f; // Minimum shader step.
-
-                    if (GdiShader.iResolution.x != Width || GdiShader.iResolution.y != Height)
-                        lock (shaderLock)
-                            shader.Start();
-
-                    GdiShader.iResolution.x = Width;
-                    GdiShader.iResolution.y = Height;
-                    if (shader != null)
-                    {
-                        lock (shaderLock)
-                            shader.Step();
-                        if (InvokeRequired)
-                            Invoke((MethodInvoker)Refresh, null);
-                        else
-                            Refresh();
-                    }
+                    lock (shaderLock)
+                        shader.Step();
+                    if (InvokeRequired)
+                        Invoke((MethodInvoker)Refresh, null);
+                    else
+                        Refresh();
                 }
             }
 

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
-namespace GdiShaders
+﻿namespace GdiShaders
 {
+    using System;
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
+    using GdiShaders.Examples;
+
     public partial class Form1 : Form
     {
         public GdiShader[] shaders = new GdiShader[]
@@ -35,6 +32,12 @@ namespace GdiShaders
             new SampleGdiShader20(),
             new SampleGdiShader21(),
             new SampleGdiShader22(),
+            new SampleGdiShader23(),
+            new SampleGdiShader24(),
+            new SampleGdiShader25(),
+            new SampleGdiShader26(),
+            new SampleGdiShader27(),
+            new SampleGdiShader28(),
         };
 
         public Form1()
