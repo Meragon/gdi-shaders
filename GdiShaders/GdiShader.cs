@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 // GLSL
 public class GdiShader
@@ -18,9 +20,12 @@ public class GdiShader
     public static vec4 iDate;                 // (year, month, day, time in seconds)
 
     internal Bitmap bmp;
-    internal int bmpWidth;
-    internal int bmpHeight;
-    internal Color[] bmpColors;
+
+    private int bmpWidth;
+    private int bmpHeight;
+    private byte[] bmpColors;
+    private Rectangle bmpRect;
+    private PixelFormat bmpFormat;
 
     public static float abs(float v)
     {
@@ -315,7 +320,7 @@ public class GdiShader
     {
         var n = new vec3();
         var l = (float)Math.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-        
+
         if (l > 9.99999974737875E-06)
         {
             n.x = v.x / l;
@@ -481,40 +486,46 @@ public class GdiShader
     }
     public virtual void Start()
     {
-        bmp = new System.Drawing.Bitmap((int)iResolution.x, (int)iResolution.y);
+        bmp = new Bitmap((int)iResolution.x, (int)iResolution.y);
         bmpWidth = bmp.Width;
         bmpHeight = bmp.Height;
-        bmpColors = new Color[bmpWidth * bmpHeight];
-
+        bmpColors = new byte[bmpWidth * bmpHeight * 4];
+        bmpRect = new Rectangle(0, 0, bmpWidth, bmpHeight);
+        bmpFormat = bmp.PixelFormat;
+        
         iMouse = new vec4();
     }
     public void Step()
     {
         for (int y = 0; y < bmpHeight; y++)
-        for (int x = 0; x < bmpWidth; x++)
-        {
-            vec4 fragColor;
-
-            mainImage(out fragColor, new vec2(x, y));
-
-            var r = (int)(fragColor.r * 255);
-            var g = (int)(fragColor.g * 255);
-            var b = (int)(fragColor.b * 255);
-            var a = (int)(fragColor.a * 255);
-
-            if (r < 0) r = 0; else if (r > 255) r = 255;
-            if (g < 0) g = 0; else if (g > 255) g = 255;
-            if (b < 0) b = 0; else if (b > 255) b = 255;
-            if (a < 0) a = 0; else if (a > 255) a = 255;
-
-            var color = Color.FromArgb(a, r, g, b);
-            var colorIndex = x + y * bmpWidth;
-            if (color != bmpColors[colorIndex])
+            for (int x = 0; x < bmpWidth; x++)
             {
-                bmpColors[colorIndex] = color;
-                bmp.SetPixel(x, bmpHeight - y - 1, color); // Updside-down
+                vec4 fragColor;
+
+                mainImage(out fragColor, new vec2(x, y));
+
+                var r = fragColor.r * 255;
+                var g = fragColor.g * 255;
+                var b = fragColor.b * 255;
+                var a = fragColor.a * 255;
+
+                if (r < 0) r = 0; else if (r > 255) r = 255;
+                if (g < 0) g = 0; else if (g > 255) g = 255;
+                if (b < 0) b = 0; else if (b > 255) b = 255;
+                if (a < 0) a = 0; else if (a > 255) a = 255;
+
+                var colorIndex = (x + (bmpHeight - y - 1) * bmpWidth) * 4;
+                bmpColors[colorIndex] = (byte)b;
+                bmpColors[colorIndex + 1] = (byte)g;
+                bmpColors[colorIndex + 2] = (byte)r;
+                bmpColors[colorIndex + 3] = (byte)a;
             }
-        }
+
+        var bmpData = bmp.LockBits(bmpRect, ImageLockMode.ReadWrite, bmpFormat);
+
+        Marshal.Copy(bmpColors, 0, bmpData.Scan0, bmpColors.Length);
+
+        bmp.UnlockBits(bmpData);
     }
 
     public virtual void mainImage(out vec4 fragColor, vec2 fragCoord)
