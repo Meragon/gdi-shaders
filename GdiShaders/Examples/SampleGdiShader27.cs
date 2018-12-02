@@ -20,10 +20,13 @@
 
 namespace GdiShaders.Examples
 {
+    using System;
+
     /// <summary>
     /// https://www.shadertoy.com/view/4t3BW4
     /// Something is wrong.
     /// </summary>
+    [Obsolete("Not fully working")]
     public class SampleGdiShader27 : GdiShader
     {
         /*
@@ -474,7 +477,7 @@ namespace GdiShaders.Examples
 
         public override string ToString()
         {
-            return "Quadtree Truchet";
+            return "27 Quadtree Truchet";
         }
     }
 }

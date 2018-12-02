@@ -18,7 +18,7 @@
 
         public override string ToString()
         {
-            return "Cool shader";
+            return "24 Cool shader";
         }
     }
 }

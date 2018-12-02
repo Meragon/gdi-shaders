@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
-
-namespace GdiShaders
+﻿namespace GdiShaders
 {
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     public class ShaderRenderer : UserControl
     {
         public GdiShader shader;
+        public bool fixedStep; // In case you wan't to smooth shader frame transition (does not affect performance).
+        public float fixedStepValue = 0.01f;
 
         private float time;
         private static bool stop;
@@ -55,7 +54,10 @@ namespace GdiShaders
             {
                 if (shader == null) continue;
 
-                GdiShader.iTime = watch.ElapsedMilliseconds / 1000f; // Minimum shader step.
+                if (fixedStep == false)
+                    GdiShader.iTime = watch.ElapsedMilliseconds / 1000f; // Minimum shader step.
+                else
+                    GdiShader.iTime += fixedStepValue;
 
                 if (GdiShader.iResolution.x != Width || GdiShader.iResolution.y != Height)
                     lock (shaderLock)

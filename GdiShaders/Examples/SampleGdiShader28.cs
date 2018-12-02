@@ -159,7 +159,7 @@ namespace GdiShaders.Examples
 
         public override string ToString()
         {
-            return "Random Quadtree";
+            return "28 Random Quadtree";
         }
     }
 }

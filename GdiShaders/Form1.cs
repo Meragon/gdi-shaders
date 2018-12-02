@@ -8,7 +8,7 @@
 
     public partial class Form1 : Form
     {
-        public GdiShader[] shaders = new GdiShader[]
+        public GdiShader[] shaders = 
         {
             new SampleGdiShader(),
             new SampleGdiShader2(),
@@ -38,6 +38,12 @@
             new SampleGdiShader26(),
             new SampleGdiShader27(),
             new SampleGdiShader28(),
+            new SampleGdiShader29(),
+            new SampleGdiShader30(),
+            new SampleGdiShader31(),
+            new SampleGdiShader32(),
+            new SampleGdiShader33(),
+            new SampleGdiShader34(),
         };
 
         public Form1()
@@ -76,6 +82,11 @@
             base.OnClosing(e);
 
             ShaderRenderer.Stop();
+        }
+
+        private void checkBoxFixedStep_CheckedChanged(object sender, EventArgs e)
+        {
+            shaderRenderer1.fixedStep = checkBoxFixedStep.Checked;
         }
     }
 }

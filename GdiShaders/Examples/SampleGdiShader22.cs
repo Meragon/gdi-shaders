@@ -1,9 +1,12 @@
 ﻿namespace GdiShaders.Examples
 {
+    using System;
+
     /// <summary>
     /// https://www.shadertoy.com/view/XtGBDW
     /// Not fully working, mb cause I changed some UInt32 types to Int32.
     /// </summary>
+    [Obsolete("Not fully working")]
     public class SampleGdiShader22 : GdiShader
     {
         private const int LEVEL = 15;
@@ -60,7 +63,7 @@
 
         public override string ToString()
         {
-            return "Inverse Hilbert Curve";
+            return "22 Inverse Hilbert Curve";
         }
     }
 }

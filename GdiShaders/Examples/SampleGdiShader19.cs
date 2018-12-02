@@ -2,27 +2,17 @@
 {
     using System;
 
-    [Obsolete("height issue, slow")]
+    /// <summary>
+    /// https://www.shadertoy.com/view/4dG3RK
+    /// </summary>
     public class SampleGdiShader19 : GdiShader
     {
-        // https://www.shadertoy.com/view/4dG3RK
-
         // ray computation vars
-        const float PI   = 3.14159265359f;
-        const float fov  = 50.0f;
-        const float fovx = PI * fov / 360.0f;
-        float       fovy = 0;
-        float       ulen = 0;
-        float       vlen = 0;
-
-        public SampleGdiShader19()
-        {
-            ulen = tan(fovx);
-            vlen = tan(fovy);
-        }
+        const float PI = 3.14159265359f;
+        const float fov = 50.0f;
 
         // epsilon-type values
-        const float S       = 0.01f;
+        const float S = 0.01f;
         const float EPSILON = 0.01f;
 
         // const delta vectors for normal calculation
@@ -35,7 +25,7 @@
             float s = 1.0f;
             vec3 d = abs(p) - new vec3(s);
             return min(max(d.x, max(d.y, d.z)), 0.0f)
-                   + length(max(d, 0.0f));
+                + length(max(d, 0.0f));
         }
 
 
@@ -79,8 +69,6 @@
 
         public override void mainImage(out vec4 fragColor, vec2 fragCoord)
         {
-            fovy = fovx * iResolution.y / iResolution.x;
-
             vec2 uv = fragCoord / iResolution.xy;
 
             float cameraDistance = 10.0f;
@@ -89,6 +77,11 @@
             vec3 cameraUp = new vec3(0.0f, 1.0f, 0.0f);
 
             // generate the ray for this pixel
+            const float fovx = PI * fov / 360.0f;
+            float fovy = fovx * iResolution.y / iResolution.x;
+            float ulen = tan(fovx);
+            float vlen = tan(fovy);
+
             vec2 camUV = uv * 2.0f - new vec2(1.0f, 1.0f);
             vec3 nright = normalize(cross(cameraUp, cameraDirection));
             vec3 pixel = cameraPosition + cameraDirection + nright * camUV.x * ulen + cameraUp * camUV.y * vlen;
@@ -100,7 +93,7 @@
 
         public override string ToString()
         {
-            return "Sphere Tracing 103";
+            return "19 Sphere Tracing 103";
         }
     }
 }

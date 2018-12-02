@@ -1,5 +1,8 @@
 ﻿namespace GdiShaders.Examples
 {
+    /// <summary>
+    /// https://www.shadertoy.com/view/4dsGzH
+    /// </summary>
     public class SampleGdiShader6 : GdiShader
     {
         vec3  COLOR1      = new vec3(0.0f, 0.0f, 0.3f);
@@ -44,7 +47,7 @@
 
         public override string ToString()
         {
-            return "Lines";
+            return "6 Waves";
         }
     }
 }

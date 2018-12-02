@@ -1,9 +1,12 @@
 ﻿namespace GdiShaders.Examples
 {
+    using System;
+
     /// <summary>
     /// https://www.shadertoy.com/view/MscBRs
     /// Glow is not working: L54 commented.
     /// </summary>
+    [Obsolete("Not fully working")]
     public class SampleGdiShader25 : GdiShader
     {
         // @lsdlive
@@ -51,7 +54,7 @@
             // Trick inspired by balkhan's shadertoys.
             // Usually, in raymarch shaders it gives a glow effect,
             // here, it gives a colors patchwork & transparent voxels effects.
-            //g += .015f / (.01f + d * d);
+            //g += .015f / (.01f + d * d); // TODO: this one is not working, so it's commented.
             return d;
         }
 
@@ -120,7 +123,7 @@
 
         public override string ToString()
         {
-            return "Outline #1: Voxel tunnel";
+            return "25 Outline #1: Voxel tunnel";
         }
     }
 }

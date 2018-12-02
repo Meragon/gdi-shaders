@@ -20,7 +20,7 @@
 
         public override string ToString()
         {
-            return "Spiral";
+            return "3 Spiral";
         }
     }
 }

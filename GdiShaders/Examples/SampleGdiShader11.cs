@@ -62,7 +62,7 @@
 
         public override string ToString()
         {
-            return "Colored light balls";
+            return "11 Colored light balls";
         }
     }
 }

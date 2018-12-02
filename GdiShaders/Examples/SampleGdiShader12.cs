@@ -71,7 +71,7 @@
 
         public override string ToString()
         {
-            return "^";
+            return "12 Light Balls";
         }
     }
 }

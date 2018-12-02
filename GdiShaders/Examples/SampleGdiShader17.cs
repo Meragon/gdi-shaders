@@ -2,7 +2,9 @@
 {
     using System;
 
-    [Obsolete("shadow issue")]
+    /// <summary>
+    /// https://www.shadertoy.com/view/4sj3zy
+    /// </summary>
     public class SampleGdiShader17 : GdiShader
     {
         vec3 bgCol = new vec3(0.6f, 0.5f, 0.6f);
@@ -11,15 +13,15 @@
         float sphereScale = 0.7f;
         float sphereShine = 0.5f;
 
-        //Sets diffuse colour(red, green, blue), specular colour(red, green, blue), 
-        //and initial specular point position(x, y)
-        vec3 sphereDiff = new vec3(0.5f, 0.0f, 0.5f);
-        vec3 sphereSpec = new vec3(1.0f, 1.0f, 1.0f);
-        vec2 specPoint  = new vec2(0.2f, -0.1f);
-
         //Main method/function
         public override void mainImage(out vec4 fragColor, vec2 fragCoord)
         {
+            //Sets diffuse colour(red, green, blue), specular colour(red, green, blue), 
+            //and initial specular point position(x, y)
+            vec3 sphereDiff = new vec3(0.5f, 0.0f, 0.5f);
+            vec3 sphereSpec = new vec3(1.0f, 1.0f, 1.0f);
+            vec2 specPoint = new vec2(0.2f, -0.1f);
+
             //Creates shader pixel coordinates
             vec2 uv = fragCoord.xy / iResolution.xy;
 
@@ -73,7 +75,7 @@
 
         public override string ToString()
         {
-            return "Sphere";
+            return "17 Rotating Sphere";
         }
     }
 }

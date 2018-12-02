@@ -1,8 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
     using System;
-
-    [Obsolete("very slow")]
+    
     public class SampleGdiShader10 : GdiShader
     {
         public override void mainImage(out vec4 fragColor, vec2 fragCoord)
@@ -35,6 +34,11 @@
             color *= 0.5f + 0.5f * pow(16.0f * p.x * (1.0f - p.x) * p.y * (1.0f - p.y), 0.15f);
 
             fragColor = new vec4(color, 1.0f);
+        }
+
+        public override string ToString()
+        {
+            return "10 Fractal";
         }
     }
 }

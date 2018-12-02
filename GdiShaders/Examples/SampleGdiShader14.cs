@@ -1,8 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
     using System;
-
-    [Obsolete("slow")]
+    
     public class SampleGdiShader14 : GdiShader
     {
         float hash(float n)
@@ -84,7 +83,7 @@
 
         public override string ToString()
         {
-            return "Lines";
+            return "14 Lines";
         }
     }
 }

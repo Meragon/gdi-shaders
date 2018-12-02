@@ -1,8 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
     using System;
-
-    [Obsolete("slow")]
+    
     public class SampleGdiShader15 : GdiShader
     {
         float t = iTime;
@@ -33,6 +32,11 @@
                 d += min(rz, 1f);
             }
             fragColor = new vec4(cl, 1f);
+        }
+
+        public override string ToString()
+        {
+            return "15";
         }
     }
 }

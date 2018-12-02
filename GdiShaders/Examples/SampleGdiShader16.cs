@@ -29,7 +29,7 @@
 
         public override string ToString()
         {
-            return "Tiles";
+            return "16 Tiles";
         }
     }
 }

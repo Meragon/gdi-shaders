@@ -2,7 +2,9 @@
 {
     using System;
 
-    [Obsolete("very slow")]
+    /// <summary>
+    /// https://www.shadertoy.com/view/XlfGRj
+    /// </summary>
     public class SampleGdiShader5 : GdiShader
     {
         const float iterations = 17f;
@@ -71,7 +73,7 @@
 
         public override string ToString()
         {
-            return "Stars";
+            return "5 Star Nest";
         }
     }
 }

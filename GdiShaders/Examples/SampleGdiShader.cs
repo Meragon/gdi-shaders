@@ -10,7 +10,7 @@
 
         public override string ToString()
         {
-            return "Colors";
+            return "1 Colors";
         }
     }
 }

@@ -31,7 +31,7 @@
 
         public override string ToString()
         {
-            return "Caustic";
+            return "8 Caustic";
         }
     }
 }

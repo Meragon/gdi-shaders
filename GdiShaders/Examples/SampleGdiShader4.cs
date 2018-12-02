@@ -71,7 +71,7 @@
 
         public override string ToString()
         {
-            return "Flame";
+            return "4 Flame";
         }
     }
 }

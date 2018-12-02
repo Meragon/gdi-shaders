@@ -46,7 +46,7 @@
 
         public override string ToString()
         {
-            return "Squares";
+            return "2 Squares";
         }
     }
 }

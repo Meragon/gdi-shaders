@@ -41,5 +41,10 @@
             float r = length(abs(2f * uv - 1f) * iResolution.xy);
             fragColor = new vec4(t * new vec3(1.8f, 1.8f * t, .1f + pow(t, 2f - t)), 1f);
         }
+
+        public override string ToString()
+        {
+            return "13";
+        }
     }
 }

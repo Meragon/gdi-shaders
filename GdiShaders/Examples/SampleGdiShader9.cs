@@ -31,5 +31,10 @@
             float a = abs(n(new vec3(uv + iTime * 3.14f, sin(iTime))) - n(new vec3(uv + iTime, cos(iTime + 3f))));
             fragColor = new vec4(0, .5f - pow(a, .2f) / 2f, 1f - pow(a, .2f), 1);
         }
+
+        public override string ToString()
+        {
+            return "9";
+        }
     }
 }

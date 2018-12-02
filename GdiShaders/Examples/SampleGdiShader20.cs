@@ -46,5 +46,10 @@
             if (iMouse.z > 0f && mod(view, 2f) == mod(floor(iMouse.z / resol.x), 2f))
                 fragColor = new vec4(0, 0, 0, 1);
         }
+
+        public override string ToString()
+        {
+            return "20 Blur";
+        }
     }
 }

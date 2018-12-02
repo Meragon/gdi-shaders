@@ -1,7 +1,13 @@
 ﻿namespace GdiShaders.Examples
 {
+    /// <summary>
+    /// https://www.shadertoy.com/view/XsfGRn
+    /// </summary>
     public class SampleGdiShader7 : GdiShader
     {
+        // Created by inigo quilez - iq/2013
+        // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+
         public override void mainImage(out vec4 fragColor, vec2 fragCoord)
         {
             vec2 p = (2.0f * fragCoord - iResolution.xy) / min(iResolution.y, iResolution.x);
@@ -38,7 +44,7 @@
 
         public override string ToString()
         {
-            return "Heart";
+            return "7 Heart - 2D";
         }
     }
 }
