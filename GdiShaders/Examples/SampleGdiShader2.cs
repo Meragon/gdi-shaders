@@ -2,6 +2,8 @@
 {
     using System;
 
+    using GdiShaders.Core;
+
     [Obsolete("almost working")]
     public class SampleGdiShader2 : GdiShader
     {

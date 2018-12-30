@@ -1,5 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
+    using GdiShaders.Core;
+
     public class SampleGdiShader20 : GdiShader
     {
         vec4 circle(vec2 p, vec2 center, float radius)

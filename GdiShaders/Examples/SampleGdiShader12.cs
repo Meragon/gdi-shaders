@@ -1,5 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
+    using GdiShaders.Core;
+
     public class SampleGdiShader12 : GdiShader
     {
         public override void mainImage(out vec4 fragColor, vec2 fragCoord)
@@ -55,8 +57,6 @@
 
             float val = sum;
 
-            iChannel0.bmp = bmp;
-
             vec3 color;
             color = new vec3(val, val * 0.66666f, 0.0f);
             tpos *= 1.2f;
@@ -64,7 +64,7 @@
             vec3 tcolor;
             if (tpos.x > -.5f + INDENT && tpos.y > -.5f + INDENT &&
                 tpos.x < .5f - INDENT && tpos.y < .5f - INDENT)
-                tcolor = .9f * texture2D(iChannel0, tpos + .5f).rgb;
+                tcolor = .9f * texture(iChannel0, tpos + .5f).rgb; // TODO: texture not working?
             else tcolor = new vec3(0.0f);
             fragColor = new vec4(max(color, tcolor), 1.0f);
         }

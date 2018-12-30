@@ -1,5 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
+    using GdiShaders.Core;
+
     public class SampleGdiShader9 : GdiShader
     {
         float hash(float n) { return fract(sin(n) * 753.5453123f); }

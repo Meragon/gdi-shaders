@@ -1,5 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
+    using GdiShaders.Core;
+
     /// <summary>
     /// https://www.shadertoy.com/view/ltKBDD
     /// </summary>

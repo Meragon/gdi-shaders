@@ -2,6 +2,8 @@
 {
     using System;
 
+    using GdiShaders.Core;
+
     /// <summary>
     /// https://www.shadertoy.com/view/MscBRs
     /// Glow is not working: L54 commented.

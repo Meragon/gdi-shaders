@@ -1,7 +1,9 @@
 ﻿namespace GdiShaders.Examples
 {
     using System;
-    
+
+    using GdiShaders.Core;
+
     public class SampleGdiShader14 : GdiShader
     {
         float hash(float n)

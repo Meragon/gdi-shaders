@@ -2,13 +2,15 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
 
+    using GdiShaders.Core;
     using GdiShaders.Examples;
 
     public partial class Form1 : Form
     {
-        public GdiShader[] shaders = 
+        public object[] shaders = 
         {
             new SampleGdiShader(),
             new SampleGdiShader2(),
@@ -44,6 +46,8 @@
             new SampleGdiShader32(),
             new SampleGdiShader33(),
             new SampleGdiShader34(),
+            new SampleGdiShader35(),
+            new SampleGdiShader36(),
         };
 
         public Form1()
@@ -54,7 +58,14 @@
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
         }
 
-        void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            ShaderRenderer.Stop();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex == -1) return;
 
@@ -66,27 +77,28 @@
             else
                 shaderRenderer1_OnStop(sender, e);
         }
-
-        void shaderRenderer1_OnStop(object sender, EventArgs e)
+        private void shaderRenderer1_OnStop(object sender, EventArgs e)
         {
             shaderRenderer1.OnStop -= shaderRenderer1_OnStop;
+            
             if (listBox1.InvokeRequired)
-                shaderRenderer1.shader = (GdiShader)listBox1.Invoke(new Func<GdiShader>(() => { return listBox1.SelectedItem as GdiShader; }));
+            {
+                listBox1.Invoke((MethodInvoker)(() => shaderRenderer1.shader = listBox1.SelectedItem as GdiShader));
+            }
             else
+            {
                 shaderRenderer1.shader = listBox1.SelectedItem as GdiShader;
+            }
             shaderRenderer1.Start();
         }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-
-            ShaderRenderer.Stop();
-        }
-
         private void checkBoxFixedStep_CheckedChanged(object sender, EventArgs e)
         {
             shaderRenderer1.fixedStep = checkBoxFixedStep.Checked;
+        }
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            shaderRenderer1.scale = (float)numericUpDown1.Value;
+            shaderRenderer1.Refresh();
         }
     }
 }

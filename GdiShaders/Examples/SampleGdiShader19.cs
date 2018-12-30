@@ -2,6 +2,8 @@
 {
     using System;
 
+    using GdiShaders.Core;
+
     /// <summary>
     /// https://www.shadertoy.com/view/4dG3RK
     /// </summary>

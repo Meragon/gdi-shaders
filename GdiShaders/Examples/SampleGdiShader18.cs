@@ -1,8 +1,18 @@
 ﻿namespace GdiShaders.Examples
 {
+    using GdiShaders.Core;
+
+    /// <summary>
+    /// https://www.shadertoy.com/view/4ttGWM
+    /// </summary>
     public class SampleGdiShader18 : GdiShader
     {
-        // https://www.shadertoy.com/view/4ttGWM
+        public override void Start()
+        {
+            base.Start();
+
+            iChannel0 = samplerXX.FromImage(ImageNames.London);
+        }
 
         float rand(vec2 n)
         {
@@ -60,7 +70,7 @@
             vec3 color = 1.0f / (pow(c + 1.61f, new vec3(4.0f))) * cos(shift * fragCoord.y / iResolution.y);
 
             color = new vec3(1.0f, .2f, .05f) / (pow((r.y + r.y) * max(.0f, p.y) + 0.1f, 4.0f)); ;
-            color += (texture2D(iChannel0, uv * 0.6f + new vec2(.5f, .1f)).xyz * 0.01f * pow((r.y + r.y) * .65f, 5.0f) + 0.055f) * mix(new vec3(.9f, .4f, .3f), new vec3(.7f, .5f, .2f), uv.y);
+            color += (texture(iChannel0, uv * 0.6f + new vec2(.5f, .1f)).xyz * 0.01f * pow((r.y + r.y) * .65f, 5.0f) + 0.055f) * mix(new vec3(.9f, .4f, .3f), new vec3(.7f, .5f, .2f), uv.y);
             color = color / (1.0f + max(new vec3(0), color));
             fragColor = new vec4(color.x, color.y, color.z, alpha);
         }

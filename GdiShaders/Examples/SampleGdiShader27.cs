@@ -22,6 +22,8 @@ namespace GdiShaders.Examples
 {
     using System;
 
+    using GdiShaders.Core;
+
     /// <summary>
     /// https://www.shadertoy.com/view/4t3BW4
     /// Something is wrong.

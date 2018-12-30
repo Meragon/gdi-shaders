@@ -71,6 +71,8 @@
     <Compile Include="Examples\SampleGdiShader32.cs" />
     <Compile Include="Examples\SampleGdiShader33.cs" />
     <Compile Include="Examples\SampleGdiShader34.cs" />
+    <Compile Include="Examples\SampleGdiShader35.cs" />
+    <Compile Include="Examples\SampleGdiShader36.cs" />
     <Compile Include="Examples\SampleGdiShader4.cs" />
     <Compile Include="Examples\SampleGdiShader5.cs" />
     <Compile Include="Examples\SampleGdiShader6.cs" />
@@ -83,19 +85,19 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="mat2.cs" />
-    <Compile Include="mat3.cs" />
+    <Compile Include="Core\mat2.cs" />
+    <Compile Include="Core\mat3.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="samplerXX.cs" />
+    <Compile Include="Core\samplerXX.cs" />
     <Compile Include="ShaderRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Examples\SampleGdiShader.cs" />
-    <Compile Include="GdiShader.cs" />
-    <Compile Include="vec2.cs" />
-    <Compile Include="vec3.cs" />
-    <Compile Include="vec4.cs" />
+    <Compile Include="Core\GdiShader.cs" />
+    <Compile Include="Core\vec2.cs" />
+    <Compile Include="Core\vec3.cs" />
+    <Compile Include="Core\vec4.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +121,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\RGBA Noise Medium.jpg" />
+    <None Include="Textures\abstract 1.jpg" />
+    <Content Include="Textures\london.jpg" />
+    <None Include="Textures\organic 2.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

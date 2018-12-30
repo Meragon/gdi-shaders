@@ -2,6 +2,8 @@
 {
     using System;
 
+    using GdiShaders.Core;
+
     /// <summary>
     /// https://www.shadertoy.com/view/XtGBDW
     /// Not fully working, mb cause I changed some UInt32 types to Int32.

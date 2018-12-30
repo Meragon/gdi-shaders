@@ -2,6 +2,11 @@
 {
     using System;
 
+    using GdiShaders.Core;
+
+    /// <summary>
+    /// https://www.shadertoy.com/view/MdX3zr
+    /// </summary>
     [Obsolete("Not working, very slow")]
     public class SampleGdiShader4 : GdiShader
     {
@@ -43,7 +48,7 @@
                 p += d * dir;
                 if (d > eps)
                 {
-                    if (flame(p) < .0)
+                    if (flame(p) < .0f)
                         glowed = true;
                     if (glowed)
                         glow = (float)(i) / 64f;
@@ -60,7 +65,9 @@
             vec3 org = new vec3(0f, -2f, 4f);
             vec3 dir = normalize(new vec3(v.x * 1.6f, -v.y, -1.5f));
 
-            vec4 p = raymarch(org, dir);
+            float limits = 0.5f;
+            vec4 p = (v.x > -limits && v.x < limits) ? raymarch(org, dir) : new vec4(0f);
+            //vec4 p = raymarch(org, dir);
             float glow = p.w;
 
             vec4 col = mix(new vec4(1f, .5f, .1f, 1f), new vec4(0.1f, .5f, 1f, 1f), p.y * .02f + .4f);

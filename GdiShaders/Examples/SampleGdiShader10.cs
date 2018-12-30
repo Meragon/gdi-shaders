@@ -1,7 +1,9 @@
 ﻿namespace GdiShaders.Examples
 {
     using System;
-    
+
+    using GdiShaders.Core;
+
     public class SampleGdiShader10 : GdiShader
     {
         public override void mainImage(out vec4 fragColor, vec2 fragCoord)

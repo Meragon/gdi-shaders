@@ -1,5 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
+    using GdiShaders.Core;
+
     public class SampleGdiShader8 : GdiShader
     {
         const float TAU      = 6.28318530718f;

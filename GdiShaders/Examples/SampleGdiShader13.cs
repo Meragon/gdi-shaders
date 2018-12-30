@@ -1,5 +1,7 @@
 ﻿namespace GdiShaders.Examples
 {
+    using GdiShaders.Core;
+
     public class SampleGdiShader13 : GdiShader
     {
         float length2(vec2 p) { return dot(p, p); }

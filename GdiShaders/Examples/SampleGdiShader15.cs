@@ -1,7 +1,9 @@
 ﻿namespace GdiShaders.Examples
 {
     using System;
-    
+
+    using GdiShaders.Core;
+
     public class SampleGdiShader15 : GdiShader
     {
         float t = iTime;
