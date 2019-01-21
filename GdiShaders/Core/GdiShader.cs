@@ -30,7 +30,7 @@
 
         public static float abs(float v)
         {
-            return Math.Abs(v);
+            return v > -v ? v : -v;
         }
         public static vec2 abs(vec2 v)
         {
@@ -324,16 +324,12 @@
         public static vec2 normalize(vec2 v)
         {
             var l = sqrt(v.x * v.x + v.y * v.y);
-            if (l > 9.99999974737875E-06)
-                return new vec2(v.x / l, v.y / l);
-            return new vec2();
+            return new vec2(v.x / l, v.y / l);
         }
         public static vec3 normalize(vec3 v)
         {
             var l = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-            if (l > 9.99999974737875E-06)
-                return new vec3(v.x / l, v.y / l, v.z / l);
-            return new vec3();
+            return new vec3(v.x / l, v.y / l, v.z / l);
         }
         public static float pow(float x, float y)
         {
@@ -363,10 +359,9 @@
         }
         public static float sign(float x)
         {
-            if (x < 0f)
-                return -1;
-            if (x == 0)
-                return 0;
+            if (x < 0f) return -1;
+            if (x == 0) return 0;
+
             return 1;
         }
         public static vec3 sign(vec3 x)

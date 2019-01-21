@@ -20,11 +20,7 @@
         }
         public static vec3 operator +(vec3 l, float r)
         {
-            var n = new vec3();
-            n.x = l.x + r;
-            n.y = l.y + r;
-            n.z = l.z + r;
-            return n;
+            return new vec3(l.x + r, l.y + r, l.z + r);
         }
         public static vec3 operator +(float l, vec3 r)
         {
@@ -44,11 +40,7 @@
         }
         public static vec3 operator *(vec3 left, float right)
         {
-            var n = new vec3();
-            n.x = left.x * right;
-            n.y = left.y * right;
-            n.z = left.z * right;
-            return n;
+            return new vec3(left.x * right, left.y * right, left.z * right);
         }
         public static vec3 operator *(float l, vec3 r)
         {

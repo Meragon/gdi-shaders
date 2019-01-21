@@ -16,9 +16,7 @@
         }
         public static vec2 operator -(vec2 v)
         {
-            v.x = -v.x;
-            v.y = -v.y;
-            return v;
+            return new vec2(-v.x, -v.y);
         }
         public static vec2 operator -(vec2 left, float right)
         {
