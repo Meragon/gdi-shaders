@@ -16,6 +16,7 @@ namespace GdiShaders.Examples
             base.Start();
 
             iChannel0 = samplerXX.FromImage(ImageNames.Abstract1);
+            iChannel0.WrapMode = WrapModes.Clamp;
         }
 
         /*

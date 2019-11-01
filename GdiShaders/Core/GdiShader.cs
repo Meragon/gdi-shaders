@@ -494,6 +494,12 @@
             if (float.IsNaN(x)) x = 0;
             if (float.IsNaN(y)) y = 0;
 
+            if (sampler.WrapMode == WrapModes.Repeat)
+            {
+                x = fract(x / sampler.bmp.Width) * sampler.bmp.Width;
+                y = fract(y / sampler.bmp.Height) * sampler.bmp.Height;
+            }
+
             x = clamp(x, 0, sampler.bmp.Width - 1);
             y = clamp(y, 0, sampler.bmp.Height - 1);
 

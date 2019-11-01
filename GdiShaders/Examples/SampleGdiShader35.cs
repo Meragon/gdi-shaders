@@ -15,6 +15,7 @@
             base.Start();
 
             iChannel0 = samplerXX.FromImage(ImageNames.Organic2);
+            iChannel0.WrapMode = WrapModes.Repeat;
         }
 
         // based on https://www.shadertoy.com/view/lsf3RH by

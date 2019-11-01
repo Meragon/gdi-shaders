@@ -11,6 +11,12 @@
         RGBANoiseMedium,
     }
 
+    public enum WrapModes
+    {
+        Clamp,
+        Repeat,
+    }
+
     public class samplerXX
     {
         public Bitmap bmp;
@@ -19,6 +25,8 @@
         {
             bmp = new Bitmap(w, h);
         }
+        
+        public WrapModes WrapMode { get; set; }
 
         private samplerXX()
         {
