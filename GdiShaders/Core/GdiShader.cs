@@ -24,9 +24,9 @@
         internal int    bmpWidth;
         internal int    bmpHeight;
 
-        private byte[]      bmpColors;
-        private Rectangle   bmpRect;
-        private PixelFormat bmpFormat;
+        private byte[]       bmpColors;
+        private Rectangle    bmpRect;
+        private PixelFormat  bmpFormat;
 
         public static float abs(float v)
         {
@@ -515,39 +515,44 @@
 
         public virtual void Start()
         {
-            bmp = new Bitmap((int)iResolution.x, (int)iResolution.y);
+            bmp = new Bitmap((int)iResolution.x, (int)iResolution.y, PixelFormat.Format32bppPArgb);
             bmpWidth = bmp.Width;
             bmpHeight = bmp.Height;
             bmpColors = new byte[bmpWidth * bmpHeight * 4];
             bmpRect = new Rectangle(0, 0, bmpWidth, bmpHeight);
             bmpFormat = bmp.PixelFormat;
-        
+
             iMouse = new vec4();
         }
         public void Step()
         {
-            for (int y = 0; y < bmpHeight; y++)
-            for (int x = 0; x < bmpWidth; x++)
+            unsafe
             {
-                vec4 fragColor;
+                fixed (byte* bmpColorsPtr = bmpColors)
+                {
+                    var ptr = bmpColorsPtr;
+                    
+                    for (int y = bmpHeight - 1; y >= 0; y--)
+                    for (int x = 0; x < bmpWidth; x++)
+                    {
+                        mainImage(out var fragColor, new vec2(x, y));
 
-                mainImage(out fragColor, new vec2(x, y));
+                        var r = fragColor.r * 255;
+                        var g = fragColor.g * 255;
+                        var b = fragColor.b * 255;
+                        var a = fragColor.a * 255;
 
-                var r = fragColor.r * 255;
-                var g = fragColor.g * 255;
-                var b = fragColor.b * 255;
-                var a = fragColor.a * 255;
+                        if (r < 0) r = 0; else if (r > 255) r = 255;
+                        if (g < 0) g = 0; else if (g > 255) g = 255;
+                        if (b < 0) b = 0; else if (b > 255) b = 255;
+                        if (a < 0) a = 0; else if (a > 255) a = 255;
 
-                if (r < 0) r = 0; else if (r > 255) r = 255;
-                if (g < 0) g = 0; else if (g > 255) g = 255;
-                if (b < 0) b = 0; else if (b > 255) b = 255;
-                if (a < 0) a = 0; else if (a > 255) a = 255;
-
-                var colorIndex = (x + (bmpHeight - y - 1) * bmpWidth) * 4;
-                bmpColors[colorIndex] = (byte)b;
-                bmpColors[colorIndex + 1] = (byte)g;
-                bmpColors[colorIndex + 2] = (byte)r;
-                bmpColors[colorIndex + 3] = (byte)a;
+                        *ptr++ = (byte) b;
+                        *ptr++ = (byte) g;
+                        *ptr++ = (byte) r;
+                        *ptr++ = (byte) a;
+                    }
+                }
             }
 
             var bmpData = bmp.LockBits(bmpRect, ImageLockMode.WriteOnly, bmpFormat);

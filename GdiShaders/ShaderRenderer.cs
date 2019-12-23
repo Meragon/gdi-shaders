@@ -8,10 +8,10 @@
 
     using GdiShaders.Core;
 
-    public class ShaderRenderer : UserControl
+    public class ShaderRenderer : Control
     {
         public GdiShader shader;
-        public bool fixedStep; // In case you wan't to smooth shader frame transition (does not affect performance).
+        public bool fixedStep; // In case you want to smooth shader frame transition (does not affect performance).
         public float fixedStepValue = 0.01f;
         public float scale = 1f;
 
@@ -22,6 +22,7 @@
         private float mouseY;
         private float mouseStartX;
         private float mouseStartY;
+        private BufferedGraphics bufferedGraphics;
 
         public ShaderRenderer()
         {
@@ -94,31 +95,42 @@
 
             mouseButtonPressed = false;
         }
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            
+            bufferedGraphics?.Dispose();
+
+            using (var g = CreateGraphics())
+            {
+                bufferedGraphics = BufferedGraphicsManager.Current.Allocate(g, new Rectangle(0, 0, Width, Height));
+                bufferedGraphics.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                bufferedGraphics.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
+                bufferedGraphics.Graphics.SmoothingMode = SmoothingMode.None;
+                bufferedGraphics.Graphics.TextRenderingHint = TextRenderingHint.SystemDefault;
+                bufferedGraphics.Graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+            }
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-
-            var graphics = e.Graphics;
-
-            // Looks like it's slightly faster to use low quality settings.
-            graphics.InterpolationMode = InterpolationMode.Low;
-            graphics.CompositingQuality = CompositingQuality.HighSpeed;
-            graphics.SmoothingMode = SmoothingMode.HighSpeed;
-            graphics.TextRenderingHint = TextRenderingHint.SystemDefault;
-            graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-
-            if (shader != null)
-                lock (shaderLock)
-                    graphics.DrawImage(shader.bmp, 0, 0, Width, Height);
+            if (shader == null || bufferedGraphics == null) return;
+            
+            lock (shaderLock)
+            {
+                bufferedGraphics.Graphics.DrawImage(shader.bmp, 0, 0, Width, Height);
+                bufferedGraphics.Render(e.Graphics);
+            }
         }
+        protected override void OnPaintBackground(PaintEventArgs e)
+        { /* Just don't */ }
 
         private int GetHeight()
         {
-            return (int)(Height * scale);
+            return (int) (Height * scale);
         }
         private int GetWidth()
         {
-            return (int)(Width * scale);
+            return (int) (Width * scale);
         }
         private void UpdateShader()
         {
@@ -136,8 +148,7 @@
                 var w = GetWidth();
                 var h = GetHeight();
 
-                if (GdiShader.iResolution.x != w || 
-                    GdiShader.iResolution.y != h)
+                if (GdiShader.iResolution.x != w || GdiShader.iResolution.y != h)
                 {
                     GdiShader.iResolution = new vec3(w, h);
 
@@ -156,9 +167,9 @@
                     }
 
                     if (InvokeRequired)
-                        Invoke((MethodInvoker)Refresh, null);
+                        Invoke((MethodInvoker) Invalidate, null);
                     else
-                        Refresh();
+                        Invalidate();
                 }
             }
 
